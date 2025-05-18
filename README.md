@@ -37,24 +37,32 @@ from cryptography.hazmat.primitives import serialization
 ```
 
 # Генерация пары ключей
+```python
 private_key = ec.generate_private_key(ec.SECP256R1())
 public_key = private_key.public_key().public_bytes(
     encoding=serialization.Encoding.PEM,
     format=serialization.PublicFormat.SubjectPublicKeyInfo
 )
+```
 
 # Создание транзакции
+```python
 tx = Transaction(public_key)
 tx.add_input(TransactionInput("prev_tx_001", 0))
 tx.add_output(TransactionOutput(public_key, 100.0))
+```
 
 # Подпись и проверка
+```python
 tx.generate_signature(private_key)
 print("Подпись корректна:", tx.verify_signature())
+```
 
 # Генерация ID
+```python
 tx.generate_id()
 print("Transaction ID:", tx.transaction_id)
+```
 
 # Юнит-тесты
 В файле test_transaction.py реализированы тесты с использованием unittest. Проверяются:
